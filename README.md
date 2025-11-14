@@ -1,4 +1,4 @@
-## SR-FLIPFLOP-USING-CASE
+# SR-FLIPFLOP-USING-CASE
 
 **AIM:**
 
@@ -34,41 +34,43 @@ The maximum possible groupings of adjacent ones are already shown in the figure.
 
 **Procedure**
 
-/* write all the steps invloved */
+Define Inputs/Outputs: Inputs: S (Set), R (Reset), c1k (clock); Outputs: Q, Qbar.
+Initialization: Set Q = 0 and Qbar = 1 at the start of the simulation.
+SR Flip-Flop Logic: On posedge c1k, compute Q = S | (~R & Q).
+Complementary Output: Update Qbar = R | (~S & Qbar) to maintain SR Flip-Flop behavior.
+Testbench: Test with combinations of S, R, and c1k to ensure proper Set-Reset functionality.
+PROGRAM
+/* Program for flipflops and verify its truth table in quartus using Verilog programming. 
 
-**PROGRAM**
+
 ```
-module  ex6(s, r, clk, rst, q);
-  input s, r, clk, rst;
-  output reg q;
-
-  always @(posedge clk or posedge rst)
+module exp6(S,R,c1k,Q,Qbar);
+input S,R,c1k;
+output reg Q;
+output reg Qbar;
+initial Q=0;
+initial Qbar=1;
+always @(posedge c1k)
 begin
-    if (rst)
-    q <= 0; // Reset the flip-flop
-    else
-begin
-      case ({s, r})
-        2'b00: q <= q;  
-        2'b01: q <= 0;  
-        2'b10: q <= 1; 
-        2'b11: q <= 0; 
-      endcase
-     end
-  end
+Q=S|((~R)&Q);
+Qbar=R|((~S)&(Qbar));
+end
 endmodule
 ```
+/* write all the steps invloved */
+
+
 
 **RTL LOGIC FOR FLIPFLOPS**
-
-![Screenshot 2025-05-08 091357](https://github.com/user-attachments/assets/33115b7f-6b0c-4691-98a9-ed5f3c95da41)
+![image](https://github.com/user-attachments/assets/7f2123ea-f1ee-40fa-acba-5daf01313ec8)
 
 
 **TIMING DIGRAMS FOR FLIP FLOPS**
-
-![image](https://github.com/user-attachments/assets/04eceb6b-9a2f-43cb-9e76-53908635da77)
+![image](https://github.com/user-attachments/assets/3ada51b7-62e4-4a46-b149-239451bac46f)
 
 
 **RESULTS**
 
-Thus the SR flipflop using verilog and validating their functionality using their functional tables is implemented successfully.
+Thus the SR flipflop is implemented and verified.
+
+
